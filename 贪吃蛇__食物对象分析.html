@@ -1,0 +1,78 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-03-21 16:02:04
+ * @LastEditTime: 2020-03-21 16:42:15
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /undefined/Users/apple/Desktop/贪吃蛇__食物对象分析.html
+ -->
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>贪吃蛇</title>
+   <style>
+     body, html {
+       margin: 0;
+       padding: 0;
+       height: 100%;
+     }
+ 
+     #map {
+       /* 此处添加position的原因: 蛇和食物需要相对于地图定位 */
+       position: relative;
+       width: 800px;
+       height: 600px;
+       background-color: #ccc;
+       margin: 50px auto;
+     }
+   </style>
+ </head>
+ <body>
+   <div id="map"></div>
+ 
+   <script>
+    // 分析食物对象
+    //  属性: 
+    //    1.width: 食物宽度
+    //    2.height: 食物高度
+    //    3.bgc:  食物背景颜色
+    //    4.x: 食物的水平坐标
+    //    5.y: 食物的竖直坐标
+    //        可以根据食物的坐标算出食物的位置信息(left/top值)
+    //  方法
+
+    // 创建食物对象
+    /* let f = {
+      width: 20,
+      height: 20,
+      bgc: 'blue',
+      x: 0,
+      y: 0
+    }
+    console.log(f); */
+
+    function Food(options = {}) {
+      // 属性
+      this.width = options.width || 20
+      this.height = options.height || 20
+      this.bgc = options.bgc || 'blue'
+      this.x = options.x || 0
+      this.y = options.y || 0
+      // 方法:
+      //    根据食物对象的属性把食物创建出来添加到地图中(随机的位置)
+      // render
+    }
+
+    let f = new Food({
+      width: 20,
+      height: 20,
+      bgc: 'red',
+      x: 0,
+      y: 0
+    })
+
+   </script>
+ </body>
+ </html>

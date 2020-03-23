@@ -1,0 +1,87 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-03-22 11:25:34
+ * @LastEditTime: 2020-03-22 11:45:23
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /贪吃蛇/蛇撞墙游戏结束.html
+ -->
+ <!DOCTYPE html>
+ <html lang="en">
+   <head>
+     <meta charset="UTF-8" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <title>贪吃蛇</title>
+     <style>
+       body,
+       html {
+         margin: 0;
+         padding: 0;
+         height: 100%;
+       }
+ 
+       #map {
+         /* 此处添加position的原因: 蛇和食物需要相对于地图定位 */
+         position: relative;
+         width: 800px;
+         height: 600px;
+         background-color: #ccc;
+         margin: 50px auto;
+       }
+     </style>
+   </head>
+   <body>
+     <div id="map"></div>
+ 
+     <script src="./food.js"></script>
+     <script src="./snake.js"></script>
+     <script>
+       let map = document.querySelector("#map");
+       // setInterval(() => {
+       //   s.move(map);
+       // }, 100);
+ 
+       // 游戏对象
+       //  管理整个游戏相关的对象(蛇, 食物, 地图)
+       //  属性
+       //      1.蛇对象
+       //      2.食物对象
+       //      3.地图对象
+       //  方法
+       //      1.游戏开始
+       //      2.游戏结束
+ 
+       function Game(target) {
+         this.snake = new Snake()  
+         this.food = new Food()
+         this.map = target
+       }
+ 
+       Game.prototype.startGame = function() {
+         // 渲染蛇和食物到地图
+         this.snake.render(this.map)
+         this.food.render(this.map)
+         let timerId = setInterval(() => {
+           // 拿到snake的move方法
+           this.snake.move(this.map)
+           let head = this.snake.body[0]
+           if(head.x > this.map.offsetWidth / this.food.width - 1 || 
+              head.x < 0 || 
+              head.y > this.map.offsetHeight / this.food.height - 1 || 
+              head.y < 0
+              ) {
+             clearInterval(timerId)
+             alert('Game over')
+           }
+         }, 100);
+       }
+       let g = new Game(map)
+       g.startGame()
+
+      //  蛇撞墙分析
+      //      判断: 蛇头的坐标和四面墙的关系
+      //  蛇走一次判断一次, 应该写在定时器里面
+ 
+     </script>
+   </body>
+ </html>

@@ -1,0 +1,98 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-03-21 21:34:43
+ * @LastEditTime: 2020-03-22 07:32:55
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /undefined/Users/apple/Desktop/创建蛇添加到地图中.html
+ -->
+ <!DOCTYPE html>
+ <html lang="en">
+   <head>
+     <meta charset="UTF-8" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <title>贪吃蛇</title>
+     <style>
+       body,
+       html {
+         margin: 0;
+         padding: 0;
+         height: 100%;
+       }
+ 
+       #map {
+         /* 此处添加position的原因: 蛇和食物需要相对于地图定位 */
+         position: relative;
+         width: 800px;
+         height: 600px;
+         background-color: #ccc;
+         margin: 50px auto;
+       }
+     </style>
+   </head>
+   <body>
+     <div id="map"></div>
+ 
+     <script src="./food.js"></script>
+     <script>
+       let map = document.querySelector('#map')
+       let f = new Food({
+         width: 20,
+         height: 20,
+         x: 100,
+         y: 100
+       });
+ 
+       f.render(map);
+
+      //  蛇对象分析
+      //    属性
+      //        1. width: 蛇一节的宽度
+      //        2. height: 蛇一节的高度
+      //        3. headBgc: 蛇头背景颜色
+      //        4. bodyBgc: 蛇身背景颜色
+      //        5. body: 蛇的每一节的信息
+      //                通过数组的长度得知蛇的长度
+      //                数组中的每一节是一个对象, 通过这个对象可以得知这一节的坐标信息
+      //                数组第一项为蛇头
+      //                例如:
+      //                  [
+      //                    {x: 2, y: 0}, //蛇头信息,
+      //                    {x: 1, y: 0}, //蛇中间信息
+      //                    {x: 0, y: 0} //蛇尾信息
+      //                  ]
+      //    方法
+      //  
+      //   创建蛇对象
+      function Snake(options = {}) {
+        this.width = options.width || 20
+        this.height = options.height || 20
+        this.headBgc = options.headBgc || 'yellow'
+        this.bodyBgc = options.bodyBgc || 'red'
+        this.body = options.body || [{x: 2, y: 0}, {x: 1, y: 0}, {x: 0, y: 0}]
+      }
+      
+      Snake.prototype.render = function(map) {
+        // 生成蛇对象
+        // 由于蛇的节数大于1, 所以需要遍历, 一节节创建出来
+        for (let i = 0; i < this.body.length; i++) {
+          let span = document.createElement('span')    
+          //用span表示蛇的每一节
+          span.style.position = 'absolute'  
+          span.style.width = `${this.width}px`
+          span.style.height = `${this.height}px`
+          i === 0 ? span.style.backgroundColor = `${this.headBgc}` : span.style.backgroundColor = `${this.bodyBgc}`
+          span.style.left = `${this.body[i].x * this.width}px`
+          span.style.top = `${this.body[i].y * this.height}px`
+        map.appendChild(span)
+
+        }
+
+        // 添加蛇对象到地图上
+      }
+      let s = new Snake()
+
+      s.render(map)      
+     </script>
+   </body>
+ </html>
